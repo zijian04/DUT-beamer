@@ -1,0 +1,316 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+
+\usepackage[UTF8,fontset=fandol]{ctex}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{dlutbeamer}
+
+\title[本科毕业设计答辩]{面向复杂场景的智能分析系统设计与实现}
+\subtitle{大连理工大学本科生毕业设计（论文）答辩}
+\author[张三]{张三}
+\institute[大连理工大学]{大连理工大学\quad 软件学院}
+\date[2026 年 6 月]{2026 年 6 月}
+\SetDLUTTitleExtra{学号：2022123456\quad 指导教师：李老师\ 教授}
+
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{DLUTNavy}\bfseries,
+  commentstyle=\color{DLUTMuted},
+  stringstyle=\color{DLUTOrange},
+  showstringspaces=false,
+  frame=single,
+  rulecolor=\color{DLUTLine},
+  backgroundcolor=\color{DLUTWarm},
+  breaklines=true
+}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{目录}
+  \tableofcontents
+\end{frame}
+
+\section{课题背景}
+
+\begin{frame}{研究背景}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.61\textwidth}
+      \begin{itemize}
+        \item 复杂业务场景中的数据规模不断增长，传统人工分析流程难以兼顾效率与稳定性。
+        \item 现有系统在\alert{实时性、可解释性与部署成本}之间仍存在明显权衡。
+        \item 本课题面向可落地的本科毕业设计，完成需求分析、方法设计、系统实现与实验验证。
+      \end{itemize}
+      \vspace{.2cm}
+      \begin{alertblock}{核心问题}
+        如何在有限资源下实现准确、稳定、可维护的智能分析流程？
+      \end{alertblock}
+    \end{column}
+    \begin{column}{.36\textwidth}
+      \DLUTPlaceholder[4.65cm]{替换为场景图片、\\系统截图或问题示意图}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{研究目标与主要工作}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.31\textwidth}
+      \begin{block}{01\quad 需求建模}
+        梳理关键业务流程，明确性能指标与约束条件。
+      \end{block}
+    \end{column}
+    \begin{column}{.31\textwidth}
+      \begin{block}{02\quad 方法设计}
+        构建可解释的分析方法，并给出模块化实现方案。
+      \end{block}
+    \end{column}
+    \begin{column}{.31\textwidth}
+      \begin{block}{03\quad 实验验证}
+        通过对比实验与消融实验验证系统有效性。
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vspace{.35cm}
+  \DLUTTag{关键词}\quad
+  \DLUTTag{模块化设计}\quad
+  \DLUTTag{性能优化}\quad
+  \DLUTTag{实验评估}
+\end{frame}
+
+\section{方案设计}
+
+\begin{frame}{总体技术路线}
+  \centering
+  \begin{tikzpicture}[
+      node distance=1.0cm,
+      box/.style={
+        draw=DLUTLine,
+        fill=DLUTWarm,
+        rounded corners=3pt,
+        minimum width=2.42cm,
+        minimum height=1.06cm,
+        align=center,
+        text=DLUTDeep,
+        font=\small\bfseries
+      },
+      arrow/.style={->,>=stealth,thick,draw=DLUTBlue}
+    ]
+    \node[box] (data) {数据采集\\与预处理};
+    \node[box,right=of data] (method) {核心方法\\与特征分析};
+    \node[box,right=of method] (service) {服务封装\\与接口设计};
+    \node[box,right=of service] (eval) {实验评估\\与迭代优化};
+    \draw[arrow] (data) -- (method);
+    \draw[arrow] (method) -- (service);
+    \draw[arrow] (service) -- (eval);
+  \end{tikzpicture}
+  \vspace{.62cm}
+  \begin{exampleblock}{设计原则}
+    以清晰的数据流组织模块边界，保证算法原型可以平滑迁移到系统实现。
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{核心方法}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.54\textwidth}
+      \begin{itemize}
+        \item 定义输入样本 $x$ 的表示向量 $\boldsymbol{h}(x)$；
+        \item 通过可学习参数 $\theta$ 估计任务输出；
+        \item 使用验证集选择关键超参数，并分析误差来源。
+      \end{itemize}
+      \vspace{.22cm}
+      \begin{block}{优化目标}
+        \[
+          \theta^\star =
+          \arg\min_{\theta}
+          \frac{1}{N}\sum_{i=1}^{N}
+          \mathcal{L}\bigl(f_{\theta}(x_i), y_i\bigr)
+          + \lambda \lVert\theta\rVert_2^2
+        \]
+      \end{block}
+    \end{column}
+    \begin{column}{.42\textwidth}
+      \DLUTPlaceholder[4.78cm]{替换为模型结构图、\\算法流程图或伪代码截图}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{系统架构}
+  \centering
+  \begin{tikzpicture}[
+      layer/.style={
+        draw=DLUTLine,
+        rounded corners=3pt,
+        minimum width=10.6cm,
+        minimum height=.78cm,
+        align=center,
+        text=DLUTDeep,
+        font=\small
+      }
+    ]
+    \node[layer,fill=DLUTSky!55] (ui) {交互层：可视化页面 \quad 结果检索 \quad 任务管理};
+    \node[layer,fill=DLUTWarm,below=.27cm of ui] (api) {服务层：REST API \quad 权限控制 \quad 日志记录};
+    \node[layer,fill=DLUTSky!55,below=.27cm of api] (core) {算法层：数据预处理 \quad 核心模型 \quad 指标计算};
+    \node[layer,fill=DLUTWarm,below=.27cm of core] (data) {数据层：业务数据 \quad 配置文件 \quad 实验记录};
+  \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]{关键模块实现}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.54\textwidth}
+\begin{lstlisting}[language=Python]
+def analyze(sample, model, threshold=0.5):
+    features = preprocess(sample)
+    score = model.predict(features)
+    return {
+        "score": float(score),
+        "accepted": score >= threshold,
+    }
+\end{lstlisting}
+    \end{column}
+    \begin{column}{.42\textwidth}
+      \begin{itemize}
+        \item 统一输入输出格式，降低模块耦合度；
+        \item 对关键参数提供可配置入口；
+        \item 保存中间结果，方便复现实验与定位问题。
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{实验与结果}
+
+\begin{frame}{实验设置}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.54\textwidth}
+      \begin{table}
+        \centering
+        \small
+        \begin{tabularx}{\linewidth}{>{\bfseries}lX}
+          \toprule
+          项目 & 设置 \\
+          \midrule
+          数据划分 & 训练集 / 验证集 / 测试集 = 7 : 1 : 2 \\
+          评价指标 & Accuracy、F1-score、平均响应时间 \\
+          对比方法 & Baseline、Method A、本文方法 \\
+          运行环境 & Python 3.11，单卡 GPU \\
+          \bottomrule
+        \end{tabularx}
+      \end{table}
+    \end{column}
+    \begin{column}{.42\textwidth}
+      \begin{block}{实验关注点}
+        \begin{itemize}
+          \item 整体性能是否提升；
+          \item 关键模块是否有效；
+          \item 系统开销是否可接受。
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{实验结果}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.54\textwidth}
+      \centering
+      \begin{tikzpicture}[x=.95cm,y=.048cm]
+        \draw[->,DLUTMuted] (0,0) -- (5.7,0);
+        \draw[->,DLUTMuted] (0,0) -- (0,106);
+        \foreach \y in {0,20,40,60,80,100} {
+          \draw[DLUTLine] (0,\y) -- (5.55,\y);
+          \node[left,text=DLUTMuted,font=\scriptsize] at (0,\y) {\y};
+        }
+        \fill[DLUTLine] (0.65,0) rectangle (1.45,76);
+        \fill[DLUTBlue!55] (2.35,0) rectangle (3.15,84);
+        \fill[DLUTNavy] (4.05,0) rectangle (4.85,92);
+        \node[below,text=DLUTMuted,font=\scriptsize] at (1.05,0) {Baseline};
+        \node[below,text=DLUTMuted,font=\scriptsize] at (2.75,0) {Method A};
+        \node[below,text=DLUTMuted,font=\scriptsize] at (4.45,0) {本文方法};
+        \node[above,text=DLUTDeep,font=\scriptsize\bfseries] at (1.05,76) {76.0};
+        \node[above,text=DLUTDeep,font=\scriptsize\bfseries] at (2.75,84) {84.0};
+        \node[above,text=DLUTDeep,font=\scriptsize\bfseries] at (4.45,92) {92.0};
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{.42\textwidth}
+      \vspace{.1cm}
+      \DLUTMetric{准确率提升}{+16.0\%}
+      \vspace{.16cm}
+
+      \DLUTMetric{平均响应时间}{38 ms}
+      \vspace{.28cm}
+
+      \begin{itemize}
+        \item 本文方法在主要指标上表现最佳；
+        \item 增加的系统开销处于可接受范围。
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{消融实验}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lccc}
+      \toprule
+      方法配置 & Accuracy (\%) & F1-score (\%) & 延迟 (ms) \\
+      \midrule
+      基础模型 & 76.0 & 74.8 & 24 \\
+      + 特征增强 & 84.0 & 82.9 & 31 \\
+      + 优化策略（本文方法） & \textbf{92.0} & \textbf{91.4} & 38 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \vspace{.3cm}
+  \begin{exampleblock}{结论}
+    各模块均带来稳定收益，优化策略对最终效果提升最为明显。
+  \end{exampleblock}
+\end{frame}
+
+\section{总结与展望}
+
+\begin{frame}{总结与展望}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.47\textwidth}
+      \begin{block}{工作总结}
+        \begin{itemize}
+          \item 完成需求分析与总体方案设计；
+          \item 实现核心方法和系统原型；
+          \item 通过多组实验验证方案有效性。
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{.47\textwidth}
+      \begin{exampleblock}{后续展望}
+        \begin{itemize}
+          \item 扩充更复杂场景的数据覆盖；
+          \item 进一步降低在线推理开销；
+          \item 加强可解释性与异常分析能力。
+        \end{itemize}
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[DLUTDeep] (current page.south west) rectangle (current page.north east);
+    \fill[DLUTBlue] (current page.south west) rectangle
+      ($(current page.south east)+(0,.16cm)$);
+    \node[anchor=north east,opacity=.11] at
+      ($(current page.north east)+(-.5cm,-.5cm)$) {\DLUTLogo[5.25cm]};
+    \node[text=white,font=\bfseries\fontsize{28}{34}\selectfont] at
+      ($(current page.center)+(0,.45cm)$) {感谢各位老师};
+    \node[text=DLUTSky,font=\large] at
+      ($(current page.center)+(0,-.42cm)$) {敬请批评指正};
+    \node[text=DLUTSky,font=\small] at
+      ($(current page.center)+(0,-1.42cm)$) {Q \& A};
+  \end{tikzpicture}
+\end{frame}
+
+\end{document}
