@@ -1,18 +1,39 @@
 \documentclass[aspectratio=169,10pt]{beamer}
 
-\usepackage[UTF8,fontset=fandol]{ctex}
+\usepackage[UTF8,fontset=macnew]{ctex}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{listings}
 \usepackage{dlutbeamer}
 
-\title[本科毕业设计答辩]{面向复杂场景的智能分析系统设计与实现}
-\subtitle{大连理工大学本科生毕业设计（论文）答辩}
+%% Refined font stack for macOS.  Both Latin and CJK weights are pulled
+%% down to Light/Medium for a calmer, more editorial feel — comment the
+%% block out on non-macOS systems.
+\setsansfont{Helvetica Neue}[
+  UprightFont    = {* Light},
+  BoldFont       = {* Medium},
+  ItalicFont     = {* Light Italic},
+  BoldItalicFont = {* Medium Italic}
+]
+\setCJKsansfont{Kaiti SC}[
+  UprightFont    = {* Regular},
+  BoldFont       = {* Bold},
+  ItalicFont     = {* Regular},
+  BoldItalicFont = {* Bold}
+]
+\setCJKmainfont{Kaiti SC}[
+  UprightFont    = {* Regular},
+  BoldFont       = {* Bold},
+  ItalicFont     = {* Regular},
+  BoldItalicFont = {* Bold}
+]
+
+\title[DLUT Beamer 模板使用指南]{DLUT Beamer 模板使用指南}
+\subtitle{基于 \texttt{dlutbeamer} 的极简蓝色答辩主题}
 \author[张三]{张三}
-\institute[大连理工大学]{大连理工大学\quad 软件学院}
+\institute[大连理工大学]{大连理工大学\ 软件学院}
 \date[2026 年 6 月]{2026 年 6 月}
-\SetDLUTTitleExtra{学号：2022123456\quad 指导教师：李老师\ 教授}
 
 \lstset{
   basicstyle=\ttfamily\scriptsize,
@@ -26,9 +47,50 @@
   breaklines=true
 }
 
+% --- 局部辅助命令（仅在本文件内定义，不修改 dlutbeamer.sty） ---
+\newcommand{\ModernPlaceholder}[2][3.7cm]{%
+  \begin{tikzpicture}
+    \node[
+      draw=DLUTLine,
+      fill=DLUTMist,
+      rounded corners=2pt,
+      minimum width=.96\linewidth,
+      minimum height=#1,
+      text=DLUTMuted,
+      align=center
+    ] {\small #2};
+  \end{tikzpicture}%
+}
+\newcommand{\ModernTag}[1]{%
+  \tikz[baseline=(tag.base)]\node[
+    fill=DLUTSky,
+    text=DLUTDeep,
+    rounded corners=2pt,
+    inner xsep=5pt,
+    inner ysep=2.1pt
+  ] (tag) {\scriptsize\bfseries #1};%
+}
+\newcommand{\ModernMetric}[2]{%
+  \begin{tikzpicture}
+    \node[
+      draw=DLUTLine,
+      fill=DLUTMist,
+      rounded corners=2pt,
+      minimum width=.255\textwidth,
+      minimum height=1.18cm,
+      align=left,
+      inner sep=7pt
+    ] {%
+      {\scriptsize\color{DLUTMuted}#1}\\[-1pt]%
+      {\Large\bfseries\color{DLUTNavy}#2}%
+    };
+  \end{tikzpicture}%
+}
+
 \begin{document}
 
-\begin{frame}[plain]
+%% ----- 封面（普通 frame，保留底部页脚条纹） -----
+\begin{frame}{}
   \titlepage
 \end{frame}
 
@@ -36,267 +98,275 @@
   \tableofcontents
 \end{frame}
 
-\section{课题背景}
+\section{模板概览}
 
-\begin{frame}{研究背景}
+\begin{frame}{设计目标}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{.61\textwidth}
+    \begin{column}{.60\textwidth}
       \begin{itemize}
-        \item 复杂业务场景中的数据规模不断增长，传统人工分析流程难以兼顾效率与稳定性。
-        \item 现有系统在\alert{实时性、可解释性与部署成本}之间仍存在明显权衡。
-        \item 本课题面向可落地的本科毕业设计，完成需求分析、方法设计、系统实现与实验验证。
+        \item 面向\alert{毕业设计答辩}场景，提供简洁克制的视觉风格。
+        \item 顶部无装饰条，frame title 为纯蓝色文字，最大化留白。
+        \item 底部四段渐变页脚，自左向右颜色逐渐加深。
+        \item 蓝色基调，配色统一，避免饱和度过高造成的廉价感。
       \end{itemize}
-      \vspace{.2cm}
-      \begin{alertblock}{核心问题}
-        如何在有限资源下实现准确、稳定、可维护的智能分析流程？
+      \vspace{.25cm}
+      \begin{alertblock}{一句话总结}
+        让幻灯片把注意力交还给\textbf{内容}，主题只做安静的底色。
       \end{alertblock}
     \end{column}
     \begin{column}{.36\textwidth}
-      \DLUTPlaceholder[4.65cm]{替换为场景图片、\\系统截图或问题示意图}
+      \ModernPlaceholder[4.6cm]{此处可放\\项目截图 / 系统图 / 示意图}
     \end{column}
   \end{columns}
 \end{frame}
 
-\begin{frame}{研究目标与主要工作}
+\begin{frame}{文件结构}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.48\textwidth}
+      \begin{block}{核心文件}
+        \begin{itemize}
+          \item \texttt{dlutbeamer.sty}：主题样式
+          \item \texttt{main.tex}：示例正文
+          \item \texttt{assets/dlut-logo.pdf}：常规校徽
+          \item \texttt{assets/dut-logo2.png}：白色校徽（透明背景）
+          \item \texttt{Makefile}：一键 \texttt{latexmk} 编译
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{.48\textwidth}
+      \begin{exampleblock}{编译方式}
+        \texttt{xelatex + ctex (fandol)}，推荐：
+        \vspace{.15cm}
+        \begin{itemize}
+          \item \texttt{make} 一键编译
+          \item 或 \texttt{latexmk -xelatex main.tex}
+        \end{itemize}
+      \end{exampleblock}
+      \vspace{.2cm}
+      \ModernTag{XeLaTeX}\quad
+      \ModernTag{Beamer}\quad
+      \ModernTag{CTeX}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{快速上手}
+
+\begin{frame}[fragile]{最小可用示例}
+\begin{lstlisting}[language=tex]
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage[UTF8,fontset=fandol]{ctex}
+\usepackage{dlutbeamer}
+
+\title{答辩标题}
+\subtitle{副标题}
+\author{你的名字}
+\institute{大连理工大学\ 软件学院}
+\date{2026 年 6 月}
+
+\begin{document}
+  \begin{frame}{} \titlepage \end{frame}
+  \begin{frame}{目录} \tableofcontents \end{frame}
+  % ... 章节与正文 ...
+  \begin{frame}{} \DLUTThankYouPage \end{frame}
+\end{document}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{常用命令一览}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{\linewidth}{>{\ttfamily}lX}
+      \toprule
+      \normalfont 命令 & 用途 \\
+      \midrule
+      \textbackslash DLUTLogo[尺寸] & 插入彩色校徽（默认 1.2cm） \\
+      \textbackslash DLUTLogoWhite[尺寸] & 插入白色描线校徽（用于深色背景） \\
+      \textbackslash DLUTThankYouPage & 渲染封底感谢页 \\
+      \textbackslash DLUTSectionOverview & 章节导航页（默认自动插入） \\
+      \textbackslash DLUTDisableSectionPages & 关闭章节自动导航 \\
+      \textbackslash SetDLUTDefenseLabel\{...\} & 自定义页脚答辩标识 \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+\end{frame}
+
+\section{主题元素}
+
+\begin{frame}{frame title 与正文样式}
+  \framesubtitle{标题旁可附加副标题，使用较浅灰色}
+  \begin{itemize}
+    \item 一级项目以\alert{蓝色实心圆点}标记，可使用 \texttt{\textbackslash alert\{\}} 高亮。
+    \begin{itemize}
+      \item 二级项目自动缩进，圆点更小、颜色更深。
+      \begin{itemize}
+        \item 三级项目以蓝色\textbf{描边}圆环呈现。
+      \end{itemize}
+    \end{itemize}
+    \item 数学公式继承 Beamer 默认设置：$f(x)=\sum_{i=1}^{N}\alpha_i\,\phi_i(x)$。
+    \item 行内代码 / 命令使用 \texttt{\textbackslash texttt}：\texttt{python main.py}。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{三种内置块}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{.31\textwidth}
-      \begin{block}{01\quad 需求建模}
-        梳理关键业务流程，明确性能指标与约束条件。
+      \begin{block}{常规 block}
+        蓝色标题条 + 浅蓝底色，适合一般论点或定义。
       \end{block}
     \end{column}
     \begin{column}{.31\textwidth}
-      \begin{block}{02\quad 方法设计}
-        构建可解释的分析方法，并给出模块化实现方案。
-      \end{block}
+      \begin{alertblock}{alertblock}
+        用于强调核心问题、风险点或反例。
+      \end{alertblock}
     \end{column}
     \begin{column}{.31\textwidth}
-      \begin{block}{03\quad 实验验证}
-        通过对比实验与消融实验验证系统有效性。
-      \end{block}
+      \begin{exampleblock}{exampleblock}
+        用于例子、推论、补充说明等次要信息。
+      \end{exampleblock}
     \end{column}
   \end{columns}
-  \vspace{.35cm}
-  \DLUTTag{关键词}\quad
-  \DLUTTag{模块化设计}\quad
-  \DLUTTag{性能优化}\quad
-  \DLUTTag{实验评估}
+  \vspace{.4cm}
+  \centering
+  \ModernTag{标签}\quad
+  \ModernTag{可用于关键词}\quad
+  \ModernTag{或属性}
 \end{frame}
 
-\section{方案设计}
+\begin{frame}{配色与可复用色名}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.55\textwidth}
+      主题预定义了 9 个语义色，可在 tex 中直接以 \texttt{\textbackslash color\{...\}} 使用：
+      \vspace{.2cm}
+      \begin{itemize}
+        \item \texttt{DLUTBlue / DLUTAzure / DLUTNavy / DLUTDeep}\\
+              \footnotesize 从亮到暗的主色，用于标题、强调、装饰。
+        \item \texttt{DLUTSky / DLUTMist / DLUTWarm}\\
+              \footnotesize 极浅的蓝白底色，用于卡片、占位框。
+        \item \texttt{DLUTLine / DLUTMuted}\\
+              \footnotesize 边线灰与正文次要色。
+      \end{itemize}
+    \end{column}
+    \begin{column}{.42\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \foreach \c/\n [count=\i] in
+          {DLUTDeep/Deep, DLUTNavy/Navy, DLUTAzure/Azure,
+           DLUTBlue/Blue, DLUTSky/Sky, DLUTMist/Mist, DLUTLine/Line}{
+          \fill[\c] (0,-.55*\i) rectangle (1.0,-.55*\i+.45);
+          \node[anchor=west,font=\scriptsize,text=DLUTDeep]
+            at (1.15,-.55*\i+.225) {\texttt{\c}};
+        }
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
 
-\begin{frame}{总体技术路线}
+\section{进阶用法}
+
+\begin{frame}{页脚结构}
   \centering
   \begin{tikzpicture}[
-      node distance=1.0cm,
+      cell/.style={
+        minimum width=2.85cm,
+        minimum height=.95cm,
+        align=center,
+        font=\small,
+        text=DLUTDeep
+      }
+    ]
+    \node[cell,fill=DLUTBlue!15] (a) at (0,0)       {作者 (机构)};
+    \node[cell,fill=DLUTBlue!30] (b) at (2.85,0)    {短标题};
+    \node[cell,fill=DLUTBlue!50,text=white] (c) at (5.70,0) {日期};
+    \node[cell,fill=DLUTBlue!75,text=white,minimum width=1.5cm] (d) at (8.15,0) {页码};
+  \end{tikzpicture}
+  \vspace{.55cm}
+  \begin{itemize}
+    \item 四段单元宽度比为 \texttt{30 : 42 : 18 : 10}，自动占满页面宽度。
+    \item 内容来源：\texttt{\textbackslash insertshortauthor / \textbackslash insertshortinstitute / \textbackslash insertshorttitle / \textbackslash insertshortdate / \textbackslash insertframenumber}。
+    \item 渐变颜色由 \texttt{DLUTBlue} 不同明度生成，统一色相便于打印阅读。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{占位框 / 标签 / 指标卡}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{.48\textwidth}
+      本模板示例文件提供三个工具宏（在 \texttt{main.tex} 中定义）：
+      \begin{itemize}
+        \item \texttt{\textbackslash ModernPlaceholder[高度]\{说明\}} —— 图片占位框；
+        \item \texttt{\textbackslash ModernTag\{关键词\}} —— 行内标签；
+        \item \texttt{\textbackslash ModernMetric\{标题\}\{数值\}} —— 指标卡。
+      \end{itemize}
+      它们都使用主题预定义的蓝色色名，确保风格一致。
+    \end{column}
+    \begin{column}{.48\textwidth}
+      \ModernPlaceholder[2.6cm]{ModernPlaceholder 示例}
+      \vspace{.25cm}
+
+      \ModernMetric{准确率}{92.0\%}\quad
+      \ModernMetric{响应时间}{38 ms}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{TikZ 与图表配色建议}
+  \centering
+  \begin{tikzpicture}[
+      node distance=.95cm,
       box/.style={
         draw=DLUTLine,
         fill=DLUTWarm,
         rounded corners=3pt,
-        minimum width=2.42cm,
-        minimum height=1.06cm,
+        minimum width=2.4cm,
+        minimum height=1.0cm,
         align=center,
         text=DLUTDeep,
         font=\small\bfseries
       },
       arrow/.style={->,>=stealth,thick,draw=DLUTBlue}
     ]
-    \node[box] (data) {数据采集\\与预处理};
-    \node[box,right=of data] (method) {核心方法\\与特征分析};
-    \node[box,right=of method] (service) {服务封装\\与接口设计};
-    \node[box,right=of service] (eval) {实验评估\\与迭代优化};
-    \draw[arrow] (data) -- (method);
-    \draw[arrow] (method) -- (service);
-    \draw[arrow] (service) -- (eval);
+    \node[box] (a) {撰写正文};
+    \node[box,right=of a] (b) {引用主题色};
+    \node[box,right=of b] (c) {插入图表};
+    \node[box,right=of c] (d) {导出答辩 PDF};
+    \draw[arrow] (a) -- (b);
+    \draw[arrow] (b) -- (c);
+    \draw[arrow] (c) -- (d);
   \end{tikzpicture}
-  \vspace{.62cm}
-  \begin{exampleblock}{设计原则}
-    以清晰的数据流组织模块边界，保证算法原型可以平滑迁移到系统实现。
+  \vspace{.55cm}
+  \begin{exampleblock}{建议}
+    自定义 TikZ 图形时，统一使用主题色名而非裸十六进制；
+    日后调整主题色，所有插图会自动跟随更新。
   \end{exampleblock}
 \end{frame}
 
-\begin{frame}{核心方法}
+\section{总结}
+
+\begin{frame}{小结}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{.54\textwidth}
-      \begin{itemize}
-        \item 定义输入样本 $x$ 的表示向量 $\boldsymbol{h}(x)$；
-        \item 通过可学习参数 $\theta$ 估计任务输出；
-        \item 使用验证集选择关键超参数，并分析误差来源。
-      \end{itemize}
-      \vspace{.22cm}
-      \begin{block}{优化目标}
-        \[
-          \theta^\star =
-          \arg\min_{\theta}
-          \frac{1}{N}\sum_{i=1}^{N}
-          \mathcal{L}\bigl(f_{\theta}(x_i), y_i\bigr)
-          + \lambda \lVert\theta\rVert_2^2
-        \]
-      \end{block}
-    \end{column}
-    \begin{column}{.42\textwidth}
-      \DLUTPlaceholder[4.78cm]{替换为模型结构图、\\算法流程图或伪代码截图}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{系统架构}
-  \centering
-  \begin{tikzpicture}[
-      layer/.style={
-        draw=DLUTLine,
-        rounded corners=3pt,
-        minimum width=10.6cm,
-        minimum height=.78cm,
-        align=center,
-        text=DLUTDeep,
-        font=\small
-      }
-    ]
-    \node[layer,fill=DLUTSky!55] (ui) {交互层：可视化页面 \quad 结果检索 \quad 任务管理};
-    \node[layer,fill=DLUTWarm,below=.27cm of ui] (api) {服务层：REST API \quad 权限控制 \quad 日志记录};
-    \node[layer,fill=DLUTSky!55,below=.27cm of api] (core) {算法层：数据预处理 \quad 核心模型 \quad 指标计算};
-    \node[layer,fill=DLUTWarm,below=.27cm of core] (data) {数据层：业务数据 \quad 配置文件 \quad 实验记录};
-  \end{tikzpicture}
-\end{frame}
-
-\begin{frame}[fragile]{关键模块实现}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{.54\textwidth}
-\begin{lstlisting}[language=Python]
-def analyze(sample, model, threshold=0.5):
-    features = preprocess(sample)
-    score = model.predict(features)
-    return {
-        "score": float(score),
-        "accepted": score >= threshold,
-    }
-\end{lstlisting}
-    \end{column}
-    \begin{column}{.42\textwidth}
-      \begin{itemize}
-        \item 统一输入输出格式，降低模块耦合度；
-        \item 对关键参数提供可配置入口；
-        \item 保存中间结果，方便复现实验与定位问题。
-      \end{itemize}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\section{实验与结果}
-
-\begin{frame}{实验设置}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{.54\textwidth}
-      \begin{table}
-        \centering
-        \small
-        \begin{tabularx}{\linewidth}{>{\bfseries}lX}
-          \toprule
-          项目 & 设置 \\
-          \midrule
-          数据划分 & 训练集 / 验证集 / 测试集 = 7 : 1 : 2 \\
-          评价指标 & Accuracy、F1-score、平均响应时间 \\
-          对比方法 & Baseline、Method A、本文方法 \\
-          运行环境 & Python 3.11，单卡 GPU \\
-          \bottomrule
-        \end{tabularx}
-      \end{table}
-    \end{column}
-    \begin{column}{.42\textwidth}
-      \begin{block}{实验关注点}
+    \begin{column}{.48\textwidth}
+      \begin{block}{你已了解}
         \begin{itemize}
-          \item 整体性能是否提升；
-          \item 关键模块是否有效；
-          \item 系统开销是否可接受。
+          \item 模板的设计目标与文件结构；
+          \item 最小可用示例与常用命令；
+          \item 主题元素、配色、页脚结构。
         \end{itemize}
       \end{block}
     \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{实验结果}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{.54\textwidth}
-      \centering
-      \begin{tikzpicture}[x=.95cm,y=.048cm]
-        \draw[->,DLUTMuted] (0,0) -- (5.7,0);
-        \draw[->,DLUTMuted] (0,0) -- (0,106);
-        \foreach \y in {0,20,40,60,80,100} {
-          \draw[DLUTLine] (0,\y) -- (5.55,\y);
-          \node[left,text=DLUTMuted,font=\scriptsize] at (0,\y) {\y};
-        }
-        \fill[DLUTLine] (0.65,0) rectangle (1.45,76);
-        \fill[DLUTBlue!55] (2.35,0) rectangle (3.15,84);
-        \fill[DLUTNavy] (4.05,0) rectangle (4.85,92);
-        \node[below,text=DLUTMuted,font=\scriptsize] at (1.05,0) {Baseline};
-        \node[below,text=DLUTMuted,font=\scriptsize] at (2.75,0) {Method A};
-        \node[below,text=DLUTMuted,font=\scriptsize] at (4.45,0) {本文方法};
-        \node[above,text=DLUTDeep,font=\scriptsize\bfseries] at (1.05,76) {76.0};
-        \node[above,text=DLUTDeep,font=\scriptsize\bfseries] at (2.75,84) {84.0};
-        \node[above,text=DLUTDeep,font=\scriptsize\bfseries] at (4.45,92) {92.0};
-      \end{tikzpicture}
-    \end{column}
-    \begin{column}{.42\textwidth}
-      \vspace{.1cm}
-      \DLUTMetric{准确率提升}{+16.0\%}
-      \vspace{.16cm}
-
-      \DLUTMetric{平均响应时间}{38 ms}
-      \vspace{.28cm}
-
-      \begin{itemize}
-        \item 本文方法在主要指标上表现最佳；
-        \item 增加的系统开销处于可接受范围。
-      \end{itemize}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{消融实验}
-  \begin{table}
-    \centering
-    \small
-    \begin{tabular}{lccc}
-      \toprule
-      方法配置 & Accuracy (\%) & F1-score (\%) & 延迟 (ms) \\
-      \midrule
-      基础模型 & 76.0 & 74.8 & 24 \\
-      + 特征增强 & 84.0 & 82.9 & 31 \\
-      + 优化策略（本文方法） & \textbf{92.0} & \textbf{91.4} & 38 \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
-  \vspace{.3cm}
-  \begin{exampleblock}{结论}
-    各模块均带来稳定收益，优化策略对最终效果提升最为明显。
-  \end{exampleblock}
-\end{frame}
-
-\section{总结与展望}
-
-\begin{frame}{总结与展望}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{.47\textwidth}
-      \begin{block}{工作总结}
+    \begin{column}{.48\textwidth}
+      \begin{exampleblock}{后续建议}
         \begin{itemize}
-          \item 完成需求分析与总体方案设计；
-          \item 实现核心方法和系统原型；
-          \item 通过多组实验验证方案有效性。
-        \end{itemize}
-      \end{block}
-    \end{column}
-    \begin{column}{.47\textwidth}
-      \begin{exampleblock}{后续展望}
-        \begin{itemize}
-          \item 扩充更复杂场景的数据覆盖；
-          \item 进一步降低在线推理开销；
-          \item 加强可解释性与异常分析能力。
+          \item 替换 \texttt{title / author / institute} 等元数据；
+          \item 把示例章节换成自己的研究内容；
+          \item 需要章节导航时保留 \texttt{\textbackslash AtBeginSection} 行为，否则用 \texttt{\textbackslash DLUTDisableSectionPages}。
         \end{itemize}
       \end{exampleblock}
     \end{column}
   \end{columns}
 \end{frame}
 
+%% ----- 封底（plain：左侧蓝色背板需直达页脚位置） -----
 \begin{frame}[plain]
   \DLUTThankYouPage
 \end{frame}

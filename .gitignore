@@ -12,3 +12,5 @@
 main.pdf
 .reference-preview/
 .preview*/
+.DS_Store
+build/
