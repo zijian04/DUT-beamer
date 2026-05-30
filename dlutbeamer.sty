@@ -26,6 +26,11 @@
 \definecolor{DLUTAzure}{HTML}{3A56C8}   % structural blue
 \definecolor{DLUTNavy}{HTML}{2A3F9E}    % deeper blue accent
 \definecolor{DLUTDeep}{HTML}{1E2C6E}    % darkest blue
+%% Lighter mid-blues, sitting between DLUTBlue and DLUTSky — handy for
+%% title bands, callouts, and chart series where DLUTBlue itself is too
+%% vibrant but the pale washes are too faint.
+\definecolor{DLUTSteel}{HTML}{6D85DA}   % softened mid-blue
+\definecolor{DLUTBreeze}{HTML}{8FA3EF}  % pale mid-blue
 \definecolor{DLUTSky}{HTML}{E9EEFB}     % very light blue wash
 \definecolor{DLUTMist}{HTML}{EEF1FB}    % lighter wash
 \definecolor{DLUTWarm}{HTML}{F5F7FD}    % near-white blue tint
@@ -207,29 +212,31 @@
 \makeatother
 
 %% ----------------------------------------------------------------------
-%% Title page — full-bleed colour band at the top hosts the defence
-%% label + title + subtitle in white; the meta block (author / institute
-%% / extra / date) is centred in the middle on white; the colour logo
-%% anchors the bottom of the page above the gradient footer.  Inspired
-%% loosely by the iamjarryfeng/DLUT-Beamer-Slide-V2 cover.
+%% Title page — only the title itself sits inside a colour band; the
+%% defence label is a small kicker on white above the band, and the meta
+%% block (author / institute / extra / date) and the colour logo anchor
+%% the lower half of the page on white.  Layout inspired by the
+%% iamjarryfeng/DLUT-Beamer-Slide-V2 cover.
 \makeatletter
 \defbeamertemplate*{title page}{dlut}{%
   \begin{tikzpicture}[remember picture,overlay]
-    %% Colour band: full-bleed, ~3.4cm tall from the top edge.
-    \fill[DLUTNavy]
-      (current page.north west) rectangle
-      ($(current page.north east)+(0,-3.40cm)$);
-    %% Defence label, small white text just below the top edge.
-    \node[anchor=center,text=white!75,font=\scriptsize] at
-      ($(current page.north)+(0,-.78cm)$) {\DLUTDefenseLabel};
-    %% Title (+ optional subtitle), centred in the lower part of the band.
+    %% Defence label sits in the top whitespace, above the band.
+    \node[anchor=center,text=DLUTMuted,font=\scriptsize] at
+      ($(current page.north)+(0,-.85cm)$) {\DLUTDefenseLabel};
+    %% Title band: full-bleed horizontally, ~2.2cm tall, with ~1.25cm
+    %% breathing room above it so it reads as a frame around the title
+    %% rather than a wash filling the top of the slide.
+    \fill[DLUTBlue]
+      ($(current page.north west)+(0,-1.25cm)$) rectangle
+      ($(current page.north east)+(0,-3.45cm)$);
+    %% Title (+ optional subtitle), centred in the band.
     \node[anchor=center,align=center,inner sep=0pt] at
-      ($(current page.north)+(0,-2.12cm)$) {%
+      ($(current page.north)+(0,-2.35cm)$) {%
         \begin{minipage}{.88\paperwidth}
           \centering
           {\usebeamerfont{title}\color{white}\inserttitle\par}
           \ifx\insertsubtitle\@empty\else
-            \vspace{.20cm}
+            \vspace{.18cm}
             {\usebeamerfont{subtitle}\color{white!85}\insertsubtitle\par}
           \fi
         \end{minipage}};
@@ -246,10 +253,10 @@
         \vspace{.12cm}
         {\scriptsize\color{DLUTMuted}\DLUTTitleExtra\par}
       }
-      \vspace{.34cm}
+      \vspace{.32cm}
       {\usebeamerfont{date}\color{DLUTMuted}\insertdate\par}
     \end{minipage}\par
-    \vspace{.85cm}
+    \vspace{.80cm}
     {\DLUTLogo[2.0cm]\par}
   \end{center}
 }
