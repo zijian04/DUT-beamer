@@ -11,4 +11,4 @@
 *.xdv
 main.pdf
 .reference-preview/
-.preview/
+.preview*/

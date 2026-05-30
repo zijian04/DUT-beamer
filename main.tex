@@ -18,7 +18,7 @@
   basicstyle=\ttfamily\scriptsize,
   keywordstyle=\color{DLUTNavy}\bfseries,
   commentstyle=\color{DLUTMuted},
-  stringstyle=\color{DLUTOrange},
+  stringstyle=\color{DLUTAzure},
   showstringspaces=false,
   frame=single,
   rulecolor=\color{DLUTLine},
@@ -298,19 +298,7 @@ def analyze(sample, model, threshold=0.5):
 \end{frame}
 
 \begin{frame}[plain]
-  \begin{tikzpicture}[remember picture,overlay]
-    \fill[DLUTDeep] (current page.south west) rectangle (current page.north east);
-    \fill[DLUTBlue] (current page.south west) rectangle
-      ($(current page.south east)+(0,.16cm)$);
-    \node[anchor=north east,opacity=.11] at
-      ($(current page.north east)+(-.5cm,-.5cm)$) {\DLUTLogo[5.25cm]};
-    \node[text=white,font=\bfseries\fontsize{28}{34}\selectfont] at
-      ($(current page.center)+(0,.45cm)$) {感谢各位老师};
-    \node[text=DLUTSky,font=\large] at
-      ($(current page.center)+(0,-.42cm)$) {敬请批评指正};
-    \node[text=DLUTSky,font=\small] at
-      ($(current page.center)+(0,-1.42cm)$) {Q \& A};
-  \end{tikzpicture}
+  \DLUTThankYouPage
 \end{frame}
 
 \end{document}

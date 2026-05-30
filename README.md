@@ -2,7 +2,9 @@
 
 一套面向大连理工大学本科生毕业设计（论文）答辩的 Beamer 模版。
 
-风格参考了简洁的学术报告排版：留白充足、蓝色标题、分段页脚、浅色信息框。校徽素材参考并复用了
+风格参考了简洁的学术报告排版：留白充足、蓝色标题、分段页脚、浅色信息框，并借鉴了
+[`tuna/THU-Beamer-Theme`](https://github.com/tuna/THU-Beamer-Theme)
+适合高校答辩的紧凑导航和双层页脚结构。校徽素材参考并复用了
 [`iamjarryfeng/DLUT-Beamer-Slide-V2`](https://github.com/iamjarryfeng/DLUT-Beamer-Slide-V2)
 中的 `pic/DLUT-logo.eps`，主题代码为重新设计与实现。
 
@@ -55,10 +57,16 @@ latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
 \DLUTPlaceholder[4cm]{替换为你的图片}
 ```
 
-每个 `\section{}` 前会自动插入章节页。如不需要，可在导言区添加：
+每个 `\section{}` 前会自动插入高亮当前章节的目录页。如不需要，可在导言区添加：
 
 ```tex
 \DLUTDisableSectionPages
+```
+
+如需在每个 `\subsection{}` 前也插入目录提示页，可添加：
+
+```tex
+\DLUTEnableSubsectionPages
 ```
 
 ## 编译环境

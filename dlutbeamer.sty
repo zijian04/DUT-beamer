@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{dlutbeamer}[2026/05/30 Modern DLUT defense beamer theme]
+\ProvidesPackage{dlutbeamer}[2026/05/30 Refined DLUT defense beamer theme]
 
 \RequirePackage{tikz}
 \RequirePackage{graphicx}
@@ -8,15 +8,16 @@
 
 \mode<presentation>
 
-% Brand palette sampled from the DLUT seal and softened for projection.
+% DLUT blue palette: formal enough for a defense, light enough for projection.
 \definecolor{DLUTBlue}{HTML}{008BC2}
-\definecolor{DLUTNavy}{HTML}{164A70}
-\definecolor{DLUTDeep}{HTML}{0D3654}
-\definecolor{DLUTSky}{HTML}{E8F4FA}
-\definecolor{DLUTLine}{HTML}{D7E3EA}
-\definecolor{DLUTMuted}{HTML}{5D6B75}
-\definecolor{DLUTWarm}{HTML}{F8FAFC}
-\definecolor{DLUTOrange}{HTML}{E88632}
+\definecolor{DLUTAzure}{HTML}{0076A8}
+\definecolor{DLUTNavy}{HTML}{07577A}
+\definecolor{DLUTDeep}{HTML}{064563}
+\definecolor{DLUTSky}{HTML}{EAF6FB}
+\definecolor{DLUTMist}{HTML}{F5FAFC}
+\definecolor{DLUTWarm}{HTML}{F5FAFC}
+\definecolor{DLUTLine}{HTML}{D5E7EE}
+\definecolor{DLUTMuted}{HTML}{62727C}
 
 \newcommand{\DLUTLogoPath}{assets/dlut-logo.pdf}
 \newcommand{\SetDLUTLogoPath}[1]{\renewcommand{\DLUTLogoPath}{#1}}
@@ -32,26 +33,54 @@
 \newcommand{\DLUTDisableSectionPages}{\DLUTSectionPagesfalse}
 \newcommand{\DLUTEnableSectionPages}{\DLUTSectionPagestrue}
 
+\newif\ifDLUTSubsectionPages
+\DLUTSubsectionPagesfalse
+\newcommand{\DLUTDisableSubsectionPages}{\DLUTSubsectionPagesfalse}
+\newcommand{\DLUTEnableSubsectionPages}{\DLUTSubsectionPagestrue}
+
+% The THU theme's compact navigation works well for academic talks. The
+% colors and page furniture below are rebuilt around the DLUT identity.
+\useoutertheme[subsection=false]{smoothbars}
+\useinnertheme{circles}
+
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{bibliography item}[text]
-\setbeamersize{text margin left=.65cm,text margin right=.65cm}
+\setbeamersize{text margin left=.68cm,text margin right=.68cm}
 
 \setbeamercolor{normal text}{fg=black!88,bg=white}
-\setbeamercolor{structure}{fg=DLUTBlue}
-\setbeamercolor{alerted text}{fg=DLUTOrange}
-\setbeamercolor{frametitle}{fg=DLUTNavy,bg=white}
-\setbeamercolor{section in head/foot}{fg=DLUTDeep,bg=DLUTWarm}
+\setbeamercolor{structure}{fg=DLUTAzure}
+\setbeamercolor{alerted text}{fg=DLUTAzure}
+\setbeamercolor{frametitle}{fg=white,bg=DLUTAzure}
+\setbeamercolor{title}{fg=DLUTDeep}
+\setbeamercolor{subtitle}{fg=DLUTMuted}
+
+\setbeamercolor{palette primary}{fg=white,bg=DLUTAzure}
+\setbeamercolor{palette secondary}{fg=white,bg=DLUTNavy}
+\setbeamercolor{palette tertiary}{fg=white,bg=DLUTDeep}
+\setbeamercolor{palette quaternary}{fg=white,bg=DLUTDeep}
+\setbeamercolor{section in head/foot}{fg=white,bg=DLUTNavy}
+\setbeamercolor{subsection in head/foot}{fg=white,bg=DLUTDeep}
+\setbeamercolor{mini frame}{fg=white,bg=white}
+\setbeamercolor{mini frame shaded}{fg=DLUTSky,bg=DLUTSky}
+
 \setbeamercolor{author in head/foot}{fg=white,bg=DLUTDeep}
+\setbeamercolor{institute in head/foot}{fg=white,bg=DLUTDeep}
 \setbeamercolor{title in head/foot}{fg=white,bg=DLUTNavy}
-\setbeamercolor{date in head/foot}{fg=white,bg=DLUTBlue!82!black}
-\setbeamercolor{page number in head/foot}{fg=white,bg=DLUTBlue}
+\setbeamercolor{date in head/foot}{fg=white,bg=DLUTNavy}
+\setbeamercolor{page number in head/foot}{fg=white,bg=DLUTAzure}
+
 \setbeamercolor{block title}{fg=white,bg=DLUTNavy}
 \setbeamercolor{block body}{fg=black!88,bg=DLUTSky!52}
-\setbeamercolor{block title alerted}{fg=white,bg=DLUTOrange}
-\setbeamercolor{block body alerted}{fg=black!88,bg=DLUTOrange!10}
-\setbeamercolor{block title example}{fg=white,bg=DLUTBlue}
-\setbeamercolor{block body example}{fg=black!88,bg=DLUTSky!72}
+\setbeamercolor{block title alerted}{fg=white,bg=DLUTAzure}
+\setbeamercolor{block body alerted}{fg=black!88,bg=DLUTSky!68}
+\setbeamercolor{block title example}{fg=DLUTDeep,bg=DLUTSky}
+\setbeamercolor{block body example}{fg=black!88,bg=DLUTMist}
+
+\setbeamercolor{section in toc}{fg=DLUTDeep}
+\setbeamercolor{section in toc shaded}{fg=DLUTMuted!58}
+\setbeamercolor{subsection in toc}{fg=DLUTAzure}
+\setbeamercolor{subsection in toc shaded}{fg=DLUTMuted!52}
 
 \setbeamerfont{title}{size=\LARGE,series=\bfseries}
 \setbeamerfont{subtitle}{size=\normalsize}
@@ -60,146 +89,182 @@
 \setbeamerfont{date}{size=\small}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
 \setbeamerfont{framesubtitle}{size=\scriptsize,series=\mdseries}
-\setbeamerfont{section title}{size=\LARGE,series=\bfseries}
-\setbeamerfont{section number}{size=\fontsize{42}{46}\selectfont,series=\bfseries}
 \setbeamerfont{section in head/foot}{size=\scriptsize}
+\setbeamerfont{subsection in head/foot}{size=\tiny}
 \setbeamerfont{author in head/foot}{size=\tiny}
+\setbeamerfont{institute in head/foot}{size=\tiny}
 \setbeamerfont{title in head/foot}{size=\tiny}
 \setbeamerfont{date in head/foot}{size=\tiny}
 \setbeamerfont{page number in head/foot}{size=\tiny}
 
+\setbeamertemplate{blocks}[rounded][shadow=false]
 \setbeamertemplate{itemize item}{%
-  \tikz[baseline=-.65ex]\fill[DLUTBlue] (0,0) circle (.47ex);%
+  \tikz[baseline=-.62ex]\fill[DLUTAzure] (0,0) circle (.45ex);%
 }
 \setbeamertemplate{itemize subitem}{%
-  \tikz[baseline=-.55ex]\fill[DLUTNavy] (0,0) circle (.34ex);%
+  \tikz[baseline=-.53ex]\fill[DLUTNavy] (0,0) circle (.32ex);%
 }
 \setbeamertemplate{itemize subsubitem}{%
-  \tikz[baseline=-.5ex]\draw[DLUTBlue,line width=.45pt] (0,0) circle (.29ex);%
+  \tikz[baseline=-.48ex]\draw[DLUTAzure,line width=.45pt] (0,0) circle (.28ex);%
 }
 \setbeamertemplate{enumerate item}{%
-  \tikz[baseline=(n.base)]\node[fill=DLUTBlue,text=white,circle,inner sep=1.15pt]
-  (n) {\scriptsize\insertenumlabel};%
+  \tikz[baseline=(n.base)]\node[
+    fill=DLUTAzure,
+    text=white,
+    circle,
+    inner sep=1.1pt
+  ] (n) {\scriptsize\insertenumlabel};%
 }
-\setbeamertemplate{blocks}[rounded][shadow=false]
 
+% Keep smoothbars' section labels and mini-frame dots, but use a flat bar with
+% a small top inset. This is calmer on a 16:9 defense slide and keeps PDF link
+% annotations inside the page boundary.
 \setbeamertemplate{headline}{%
-  \leavevmode
-  \begin{beamercolorbox}[wd=\paperwidth,ht=2.6ex,dp=.95ex,leftskip=.65cm,rightskip=.65cm]{section in head/foot}
-    \raisebox{-.55pt}{%
-      \usebeamerfont{section in head/foot}%
-      \ifdefempty{\insertsectionhead}{\DLUTDefenseLabel}{\insertsectionhead}%
-    }%
-    \hfill
-    \raisebox{-.28ex}{\DLUTLogo[.34cm]}\hspace{.35em}\insertshortinstitute
-  \end{beamercolorbox}%
-}
-
-\setbeamertemplate{footline}{%
-  \begin{tikzpicture}
-    \useasboundingbox (0,0) rectangle (\paperwidth,.55pt);
-    \fill[DLUTLine] (0,0) rectangle (\paperwidth,.55pt);
-    \pgfmathsetmacro{\DLUTProgress}{min(1,\insertframenumber/max(1,\inserttotalframenumber))}
-    \fill[DLUTBlue] (0,0) rectangle ({\DLUTProgress*\paperwidth},.55pt);
-  \end{tikzpicture}\par\nointerlineskip
-  \hbox{%
-    \begin{beamercolorbox}[wd=.22\paperwidth,ht=2.55ex,dp=1.02ex,leftskip=.55em,rightskip=.35em]{author in head/foot}
-      \usebeamerfont{author in head/foot}\insertshortauthor\hfill DLUT
+  \vbox{%
+    \offinterlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=1.05ex,dp=0ex]{section in head/foot}
     \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.42\paperwidth,ht=2.55ex,dp=1.02ex,leftskip=.55em,rightskip=.35em]{title in head/foot}
-      \usebeamerfont{title in head/foot}\insertshorttitle
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.55ex,dp=1.02ex,leftskip=.55em,rightskip=.35em]{date in head/foot}
-      \usebeamerfont{date in head/foot}\insertshortdate
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.11\paperwidth,ht=2.55ex,dp=1.02ex,center]{page number in head/foot}
-      \usebeamerfont{page number in head/foot}\insertframenumber\,/\,\inserttotalframenumber
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.02ex,dp=2.65ex]{section in head/foot}
+      \insertnavigation{\paperwidth}
     \end{beamercolorbox}%
   }%
 }
 
+% A compact two-line footer echoes the THU theme and the seminar slides.
+\setbeamertemplate{footline}{%
+  \vbox{%
+    \offinterlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=.38ex,dp=0ex]{upper separation line foot}
+    \end{beamercolorbox}%
+    \hbox{%
+      \begin{beamercolorbox}[wd=.54\paperwidth,ht=2.18ex,dp=.84ex,leftskip=.58em,rightskip=.35em]{author in head/foot}
+        \usebeamerfont{author in head/foot}\insertshortauthor
+        \hfill
+        \usebeamerfont{institute in head/foot}\insertshortinstitute
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.46\paperwidth,ht=2.18ex,dp=.84ex,leftskip=.58em,rightskip=.58em]{date in head/foot}
+        \usebeamerfont{date in head/foot}\DLUTDefenseLabel
+        \hfill
+        \insertshortdate
+      \end{beamercolorbox}%
+    }%
+    \hbox{%
+      \begin{beamercolorbox}[wd=.89\paperwidth,ht=2.18ex,dp=.84ex,leftskip=.58em,rightskip=.35em]{title in head/foot}
+        \usebeamerfont{title in head/foot}\insertshorttitle
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.11\paperwidth,ht=2.18ex,dp=.84ex,center]{page number in head/foot}
+        \usebeamerfont{page number in head/foot}\insertframenumber\,/\,\inserttotalframenumber
+      \end{beamercolorbox}%
+    }%
+  }%
+}
+\setbeamercolor{upper separation line foot}{bg=DLUTBlue}
+
 \makeatletter
 \setbeamertemplate{frametitle}{%
   \nointerlineskip
-  \begin{beamercolorbox}[wd=\paperwidth,ht=4.1ex,dp=1.15ex,leftskip=.65cm,rightskip=.65cm]{frametitle}
+  \begin{beamercolorbox}[
+      wd=\paperwidth,
+      ht=3.05ex,
+      dp=1.0ex,
+      leftskip=.68cm,
+      rightskip=.68cm
+    ]{frametitle}
     \usebeamerfont{frametitle}\insertframetitle
     \ifx\insertframesubtitle\@empty
     \else
-      \hspace{.7em}{\usebeamerfont{framesubtitle}\color{DLUTMuted}\insertframesubtitle}
+      \hspace{.7em}{\usebeamerfont{framesubtitle}\color{white!78}\insertframesubtitle}
     \fi
   \end{beamercolorbox}%
-  \vspace{-.45ex}%
-  \hspace{.65cm}\color{DLUTLine}\rule{\dimexpr\paperwidth-1.3cm\relax}{.45pt}%
 }
 \makeatother
 
 \makeatletter
 \defbeamertemplate*{title page}{dlut}{%
   \begin{tikzpicture}[remember picture,overlay]
-    \fill[DLUTWarm] (current page.south west) rectangle (current page.north east);
+    \fill[white] (current page.south west) rectangle (current page.north east);
+    \fill[DLUTDeep] (current page.north west) rectangle
+      ($(current page.north east)+(0,-.14cm)$);
+    \fill[DLUTBlue] ($(current page.north west)+(0,-.14cm)$) rectangle
+      ($(current page.north east)+(0,-.19cm)$);
     \fill[DLUTDeep] (current page.south west) rectangle
-      ($(current page.south east)+(0,.42cm)$);
-    \fill[DLUTBlue] ($(current page.south west)+(0,.42cm)$) rectangle
-      ($(current page.south east)+(0,.53cm)$);
-    \fill[DLUTBlue] ($(current page.north west)+(.68cm,-1.14cm)$) rectangle
-      ($(current page.north west)+(.78cm,-4.65cm)$);
-    \node[anchor=north east,opacity=.075] at
-      ($(current page.north east)+(-.42cm,-.44cm)$) {\DLUTLogo[4.85cm]};
-    \node[anchor=south east] at
-      ($(current page.south east)+(-.52cm,.76cm)$) {\DLUTLogo[1.22cm]};
+      ($(current page.south east)+(0,.34cm)$);
+    \fill[DLUTBlue] ($(current page.south west)+(0,.34cm)$) rectangle
+      ($(current page.south east)+(0,.40cm)$);
     \node[anchor=south west,text=white,font=\scriptsize] at
-      ($(current page.south west)+(.68cm,.18cm)$) {\DLUTDefenseLabel};
+      ($(current page.south west)+(.68cm,.12cm)$) {\DLUTDefenseLabel};
+    \node[anchor=south east,text=white,font=\scriptsize] at
+      ($(current page.south east)+(-.68cm,.12cm)$) {Dalian University of Technology};
   \end{tikzpicture}
-  \vspace*{1.08cm}
-  \hspace*{1.02cm}
-  \begin{minipage}{.69\paperwidth}
-    {\usebeamerfont{title}\color{DLUTNavy}\inserttitle\par}
-    \ifx\insertsubtitle\@empty
-    \else
-      \vspace{.28cm}
-      {\usebeamerfont{subtitle}\color{DLUTMuted}\insertsubtitle\par}
-    \fi
-    \vspace{.62cm}
-    {\color{DLUTLine}\rule{.57\linewidth}{.65pt}\par}
-    \vspace{.42cm}
-    {\usebeamerfont{author}\color{DLUTDeep}\insertauthor\par}
-    \vspace{.12cm}
-    {\usebeamerfont{institute}\color{DLUTMuted}\insertinstitute\par}
-    \ifdefempty{\DLUTTitleExtra}{}{%
-      \vspace{.26cm}
-      {\scriptsize\color{DLUTMuted}\DLUTTitleExtra\par}
-    }
-    \vspace{.34cm}
-    {\usebeamerfont{date}\color{DLUTMuted}\insertdate\par}
-  \end{minipage}
+  \vspace*{.50cm}
+  \begin{center}
+    \begin{minipage}{.84\paperwidth}
+      \centering
+      \DLUTLogo[1.26cm]\par
+      \vspace{.13cm}
+      {\scriptsize\bfseries\color{DLUTNavy} DALIAN UNIVERSITY OF TECHNOLOGY\par}
+      \vspace{.42cm}
+      {\color{DLUTLine}\rule{.64\linewidth}{.65pt}\par}
+      \vspace{.42cm}
+      {\usebeamerfont{title}\color{DLUTDeep}\inserttitle\par}
+      \ifx\insertsubtitle\@empty
+      \else
+        \vspace{.18cm}
+        {\usebeamerfont{subtitle}\insertsubtitle\par}
+      \fi
+      \vspace{.48cm}
+      {\usebeamerfont{author}\color{DLUTNavy}\insertauthor\par}
+      \vspace{.10cm}
+      {\usebeamerfont{institute}\color{DLUTMuted}\insertinstitute\par}
+      \ifdefempty{\DLUTTitleExtra}{}{%
+        \vspace{.18cm}
+        {\scriptsize\color{DLUTMuted}\DLUTTitleExtra\par}
+      }
+      \vspace{.24cm}
+      {\usebeamerfont{date}\color{DLUTMuted}\insertdate\par}
+    \end{minipage}
+  \end{center}
 }
 \makeatother
 
-\defbeamertemplate*{section page}{dlut}{%
-  \begin{tikzpicture}[remember picture,overlay]
-    \fill[DLUTDeep] (current page.south west) rectangle (current page.north east);
-    \fill[DLUTBlue] (current page.south west) rectangle
-      ($(current page.south east)+(0,.14cm)$);
-    \node[anchor=north east,opacity=.1] at
-      ($(current page.north east)+(-.54cm,-.48cm)$) {\DLUTLogo[5.15cm]};
-    \node[anchor=west,text=DLUTSky] at
-      ($(current page.west)+(.92cm,1.45cm)$)
-      {\usebeamerfont{section number}\insertsectionnumber};
-    \node[anchor=west,text=white,text width=.74\paperwidth] at
-      ($(current page.west)+(.96cm,-.06cm)$)
-      {\usebeamerfont{section title}\insertsectionhead};
-    \node[anchor=west,text=DLUTSky,font=\small] at
-      ($(current page.west)+(.98cm,-1.04cm)$)
-      {Dalian University of Technology};
-  \end{tikzpicture}
+\newcommand{\DLUTSectionOverview}{%
+  \begin{frame}{目录}
+    \tableofcontents[
+      currentsection,
+      sectionstyle=show/shaded,
+      subsectionstyle=show/shaded/hide,
+      subsubsectionstyle=show/shaded/hide
+    ]
+  \end{frame}
 }
 
 \AtBeginSection[]{%
   \ifDLUTSectionPages
-    \begin{frame}[plain,noframenumbering]
-      \sectionpage
-    \end{frame}
+    \DLUTSectionOverview
   \fi
+}
+
+\AtBeginSubsection[]{%
+  \ifDLUTSubsectionPages
+    \DLUTSectionOverview
+  \fi
+}
+
+\newcommand{\DLUTThankYouPage}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[white] (current page.south west) rectangle (current page.north east);
+    \fill[DLUTDeep] (current page.north west) rectangle
+      ($(current page.north east)+(0,-.14cm)$);
+    \fill[DLUTBlue] (current page.south west) rectangle
+      ($(current page.south east)+(0,.08cm)$);
+    \node at ($(current page.center)+(0,1.35cm)$) {\DLUTLogo[1.58cm]};
+    \node[text=DLUTDeep,font=\bfseries\fontsize{27}{32}\selectfont] at
+      ($(current page.center)+(0,-.05cm)$) {感谢各位老师};
+    \node[text=DLUTMuted,font=\large] at
+      ($(current page.center)+(0,-.78cm)$) {敬请批评指正};
+    \node[text=DLUTAzure,font=\small] at
+      ($(current page.center)+(0,-1.54cm)$) {Q \& A};
+  \end{tikzpicture}%
 }
 
 \newcommand{\DLUTTag}[1]{%
@@ -208,7 +273,7 @@
     text=DLUTDeep,
     rounded corners=2pt,
     inner xsep=5pt,
-    inner ysep=2.2pt
+    inner ysep=2.1pt
   ] (tag) {\scriptsize\bfseries #1};%
 }
 
@@ -216,8 +281,8 @@
   \begin{tikzpicture}
     \node[
       draw=DLUTLine,
-      fill=white,
-      rounded corners=3pt,
+      fill=DLUTMist,
+      rounded corners=2pt,
       minimum width=.255\textwidth,
       minimum height=1.18cm,
       align=left,
@@ -233,8 +298,8 @@
   \begin{tikzpicture}
     \node[
       draw=DLUTLine,
-      fill=DLUTWarm,
-      rounded corners=3pt,
+      fill=DLUTMist,
+      rounded corners=2pt,
       minimum width=.96\linewidth,
       minimum height=#1,
       text=DLUTMuted,
