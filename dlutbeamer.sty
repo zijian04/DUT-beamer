@@ -271,10 +271,10 @@
     \fill[DLUTLine]
       (current page.north west) rectangle
       ($(current page.south west)+(.42\paperwidth,0)$);
-    %% White-outline logo, centred in the panel.
+    %% Colour vector logo, centred in the panel (sharp at any size).
     \node[anchor=center,inner sep=0pt] at
       ($(current page.west)+(.21\paperwidth,0)$)
-      {\DLUTLogoWhite[4.0cm]};
+      {\DLUTLogo[4.0cm]};
     %% Right column: closing text, horizontally and vertically centred
     %% in the right white half.  Right-half centre x is at .71\paperwidth
     %% (i.e. .21\paperwidth right of page centre).
