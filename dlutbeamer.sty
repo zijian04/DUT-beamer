@@ -18,27 +18,27 @@
 \mode<presentation>
 
 %% ----------------------------------------------------------------------
-%% Colour palette — refined blue with neutral text greys.
-%% Titles and body text are deliberately near-black greys (à la
-%% Pascal Michaillat's minimalist template); blue is reserved for
-%% accents, list markers, and the footer.
-\definecolor{DLUTBlue}{HTML}{4F6BE0}    % bright accent blue
-\definecolor{DLUTAzure}{HTML}{3A56C8}   % structural blue
-\definecolor{DLUTNavy}{HTML}{2A3F9E}    % deeper blue accent
-\definecolor{DLUTDeep}{HTML}{1E2C6E}    % darkest blue
-%% Lighter mid-blues, sitting between DLUTBlue and DLUTSky — handy for
-%% title bands, callouts, and chart series where DLUTBlue itself is too
-%% vibrant but the pale washes are too faint.
-\definecolor{DLUTSteel}{HTML}{6D85DA}   % softened mid-blue
-\definecolor{DLUTBreeze}{HTML}{8FA3EF}  % pale mid-blue
-\definecolor{DLUTSky}{HTML}{E9EEFB}     % very light blue wash
-\definecolor{DLUTMist}{HTML}{EEF1FB}    % lighter wash
-\definecolor{DLUTWarm}{HTML}{F5F7FD}    % near-white blue tint
-\definecolor{DLUTLine}{HTML}{C6CFEF}    % subtle blue border / soft panel
-\definecolor{DLUTMuted}{HTML}{6B7591}   % muted text grey-blue
-%% Editorial text greys for titles & body — keep the eye on content.
-\definecolor{DLUTInk}{HTML}{1F2330}     % near-black, used for titles
-\definecolor{DLUTBody}{HTML}{2F3340}    % softened black for body text
+%% Colour palette — clean Tailwind-derived indigo / blue with violet
+%% accents and slate neutrals.  The indigo/violet/slate combo is the
+%% widely-used "refined modern UI" trio (Linear, Stripe, Notion,
+%% Figma): cool, slightly desaturated, blue-dominant with a subtle
+%% purple bridge.  Blue carries primary structure, violet introduces
+%% gentle variety on sub-elements, slate keeps text crisp and neutral.
+\definecolor{DLUTBlue}{HTML}{4F46E5}    % indigo-600, primary accent
+\definecolor{DLUTAzure}{HTML}{4338CA}   % indigo-700, structural deep
+\definecolor{DLUTNavy}{HTML}{312E81}    % indigo-900, dark accent
+\definecolor{DLUTDeep}{HTML}{1E1B4B}    % indigo-950, darkest
+\definecolor{DLUTSteel}{HTML}{6366F1}   % indigo-500, title band — bridges blue & violet
+\definecolor{DLUTBreeze}{HTML}{A5B4FC}  % indigo-300, pale indigo
+\definecolor{DLUTViolet}{HTML}{8B5CF6}  % violet-500, purple accent
+\definecolor{DLUTLavender}{HTML}{C4B5FD} % violet-300, soft purple
+\definecolor{DLUTSky}{HTML}{EEF2FF}     % indigo-50, palest wash
+\definecolor{DLUTMist}{HTML}{E0E7FF}    % indigo-100, soft wash
+\definecolor{DLUTWarm}{HTML}{F5F3FF}    % violet-50, warm wash
+\definecolor{DLUTLine}{HTML}{C7D2FE}    % indigo-200, subtle border
+\definecolor{DLUTMuted}{HTML}{64748B}   % slate-500, neutral muted text
+\definecolor{DLUTInk}{HTML}{0F172A}     % slate-900, near-black titles
+\definecolor{DLUTBody}{HTML}{1E293B}    % slate-800, softened body text
 
 %% Footer gradient segments — single-hue blue, left → right, light → dark
 \colorlet{DLUTFootA}{DLUTBlue!15}
@@ -142,61 +142,79 @@
 \setbeamerfont{itemize/enumerate subsubbody}{size=\scriptsize}
 \setbeamerfont{footline}{size=\tiny}
 
-%% List markers — restrained dots in the new DLUTSteel mid-blue.
-%% Enumerate uses a plain bold number with a period — no filled-circle
-%% "badge", which reads as dated UI rather than editorial typography.
+%% List markers — small glossy spheres via TikZ ball color shading.
+%% Itemize uses indigo, sub-items use violet to introduce the secondary
+%% accent gently.  Enumerate keeps the filled-circle "badge" look but
+%% smaller and sheen-shaded so it reads as a glass bead rather than a
+%% solid UI button.
 \setbeamertemplate{blocks}[rounded][shadow=false]
 \setbeamertemplate{itemize item}{%
-  \tikz[baseline=-.62ex]\fill[DLUTSteel] (0,0) circle (.40ex);%
+  \tikz[baseline=-.58ex]\shade[ball color=DLUTBlue] (0,0) circle (.36ex);%
 }
 \setbeamertemplate{itemize subitem}{%
-  \tikz[baseline=-.53ex]\fill[DLUTSteel] (0,0) circle (.28ex);%
+  \tikz[baseline=-.50ex]\shade[ball color=DLUTViolet] (0,0) circle (.28ex);%
 }
 \setbeamertemplate{itemize subsubitem}{%
-  \tikz[baseline=-.48ex]\draw[DLUTSteel,line width=.45pt] (0,0) circle (.24ex);%
+  \tikz[baseline=-.46ex]\draw[DLUTViolet,line width=.4pt] (0,0) circle (.24ex);%
 }
 \setbeamertemplate{enumerate item}{%
-  {\color{DLUTSteel}\bfseries\insertenumlabel.}%
+  \tikz[baseline=-.30ex]{%
+    \shade[ball color=DLUTBlue] (0,0) circle (.95ex);%
+    \node[inner sep=0pt] at (0,.02ex)
+      {\fontsize{5}{6}\selectfont\color{white}\bfseries\insertenumlabel};%
+  }%
 }
 \setbeamertemplate{enumerate subitem}{%
-  {\color{DLUTSteel}\bfseries\insertenumlabel.}%
+  \tikz[baseline=-.30ex]{%
+    \shade[ball color=DLUTViolet] (0,0) circle (.85ex);%
+    \node[inner sep=0pt] at (0,.02ex)
+      {\fontsize{4.5}{5}\selectfont\color{white}\bfseries\insertsubenumlabel};%
+  }%
 }
 
-%% Editorial-style table of contents — zero-padded display numbers in
-%% DLUTSteel, section titles in DLUTInk (current) or DLUTMuted (other).
-%% Replaces the default circles-and-shading which read as dated UI.
+%% Table of contents — refined glossy spheres carry the section
+%% numbers.  Smaller than the default circles inner theme and shaded
+%% for depth, so they read as glass beads rather than flat UI chips.
 \makeatletter
 \setbeamertemplate{section in toc}{%
   \leavevmode
-  \makebox[1.35cm][l]{%
-    \fontsize{17}{20}\selectfont\bfseries\color{DLUTSteel}%
-    \ifnum\inserttocsectionnumber<10 0\fi\inserttocsectionnumber
+  \hspace{.10cm}%
+  \tikz[baseline=-.32ex]{%
+    \shade[ball color=DLUTBlue] (0,0) circle (1.05ex);%
+    \node[inner sep=0pt] at (0,.02ex)
+      {\fontsize{5.5}{6}\selectfont\color{white}\bfseries\inserttocsectionnumber};%
   }%
-  {\fontsize{12}{14}\selectfont\color{DLUTInk}\inserttocsection}%
-  \par\vspace{.30cm}
+  \hspace{.48cm}%
+  {\fontsize{11}{14}\selectfont\color{DLUTInk}\inserttocsection}%
+  \par\vspace{.28cm}
 }
 \setbeamertemplate{section in toc shaded}{%
   \leavevmode
-  \makebox[1.35cm][l]{%
-    \fontsize{17}{20}\selectfont\bfseries\color{DLUTLine}%
-    \ifnum\inserttocsectionnumber<10 0\fi\inserttocsectionnumber
+  \hspace{.10cm}%
+  \tikz[baseline=-.32ex]{%
+    \shade[ball color=DLUTLine] (0,0) circle (1.05ex);%
+    \node[inner sep=0pt] at (0,.02ex)
+      {\fontsize{5.5}{6}\selectfont\color{DLUTMuted}\bfseries\inserttocsectionnumber};%
   }%
-  {\fontsize{12}{14}\selectfont\color{DLUTMuted!70}\inserttocsection}%
-  \par\vspace{.30cm}
+  \hspace{.48cm}%
+  {\fontsize{11}{14}\selectfont\color{DLUTMuted!72}\inserttocsection}%
+  \par\vspace{.28cm}
 }
 \setbeamertemplate{subsection in toc}{%
   \leavevmode
-  \hspace{1.35cm}%
-  {\color{DLUTSteel}\footnotesize ─}\hspace{.6em}%
+  \hspace{.85cm}%
+  \tikz[baseline=-.42ex]\shade[ball color=DLUTViolet] (0,0) circle (.32ex);%
+  \hspace{.45em}%
   {\fontsize{10}{12}\selectfont\color{DLUTMuted}\inserttocsubsection}%
-  \par\vspace{.18cm}
+  \par\vspace{.16cm}
 }
 \setbeamertemplate{subsection in toc shaded}{%
   \leavevmode
-  \hspace{1.35cm}%
-  {\color{DLUTLine}\footnotesize ─}\hspace{.6em}%
+  \hspace{.85cm}%
+  \tikz[baseline=-.42ex]\shade[ball color=DLUTLavender] (0,0) circle (.32ex);%
+  \hspace{.45em}%
   {\fontsize{10}{12}\selectfont\color{DLUTMuted!55}\inserttocsubsection}%
-  \par\vspace{.18cm}
+  \par\vspace{.16cm}
 }
 \makeatother
 
