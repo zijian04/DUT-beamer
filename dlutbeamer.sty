@@ -142,25 +142,63 @@
 \setbeamerfont{itemize/enumerate subsubbody}{size=\scriptsize}
 \setbeamerfont{footline}{size=\tiny}
 
-%% List markers — small filled circles in the blue palette
+%% List markers — restrained dots in the new DLUTSteel mid-blue.
+%% Enumerate uses a plain bold number with a period — no filled-circle
+%% "badge", which reads as dated UI rather than editorial typography.
 \setbeamertemplate{blocks}[rounded][shadow=false]
 \setbeamertemplate{itemize item}{%
-  \tikz[baseline=-.62ex]\fill[DLUTAzure] (0,0) circle (.42ex);%
+  \tikz[baseline=-.62ex]\fill[DLUTSteel] (0,0) circle (.40ex);%
 }
 \setbeamertemplate{itemize subitem}{%
-  \tikz[baseline=-.53ex]\fill[DLUTNavy] (0,0) circle (.30ex);%
+  \tikz[baseline=-.53ex]\fill[DLUTSteel] (0,0) circle (.28ex);%
 }
 \setbeamertemplate{itemize subsubitem}{%
-  \tikz[baseline=-.48ex]\draw[DLUTAzure,line width=.45pt] (0,0) circle (.26ex);%
+  \tikz[baseline=-.48ex]\draw[DLUTSteel,line width=.45pt] (0,0) circle (.24ex);%
 }
 \setbeamertemplate{enumerate item}{%
-  \tikz[baseline=(n.base)]\node[
-    fill=DLUTAzure,
-    text=white,
-    circle,
-    inner sep=1.0pt
-  ] (n) {\scriptsize\insertenumlabel};%
+  {\color{DLUTSteel}\bfseries\insertenumlabel.}%
 }
+\setbeamertemplate{enumerate subitem}{%
+  {\color{DLUTSteel}\bfseries\insertenumlabel.}%
+}
+
+%% Editorial-style table of contents — zero-padded display numbers in
+%% DLUTSteel, section titles in DLUTInk (current) or DLUTMuted (other).
+%% Replaces the default circles-and-shading which read as dated UI.
+\makeatletter
+\setbeamertemplate{section in toc}{%
+  \leavevmode
+  \makebox[1.35cm][l]{%
+    \fontsize{17}{20}\selectfont\bfseries\color{DLUTSteel}%
+    \ifnum\inserttocsectionnumber<10 0\fi\inserttocsectionnumber
+  }%
+  {\fontsize{12}{14}\selectfont\color{DLUTInk}\inserttocsection}%
+  \par\vspace{.30cm}
+}
+\setbeamertemplate{section in toc shaded}{%
+  \leavevmode
+  \makebox[1.35cm][l]{%
+    \fontsize{17}{20}\selectfont\bfseries\color{DLUTLine}%
+    \ifnum\inserttocsectionnumber<10 0\fi\inserttocsectionnumber
+  }%
+  {\fontsize{12}{14}\selectfont\color{DLUTMuted!70}\inserttocsection}%
+  \par\vspace{.30cm}
+}
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode
+  \hspace{1.35cm}%
+  {\color{DLUTSteel}\footnotesize ─}\hspace{.6em}%
+  {\fontsize{10}{12}\selectfont\color{DLUTMuted}\inserttocsubsection}%
+  \par\vspace{.18cm}
+}
+\setbeamertemplate{subsection in toc shaded}{%
+  \leavevmode
+  \hspace{1.35cm}%
+  {\color{DLUTLine}\footnotesize ─}\hspace{.6em}%
+  {\fontsize{10}{12}\selectfont\color{DLUTMuted!55}\inserttocsubsection}%
+  \par\vspace{.18cm}
+}
+\makeatother
 
 %% ----------------------------------------------------------------------
 %% Headline — empty (no top bar)
@@ -212,52 +250,45 @@
 \makeatother
 
 %% ----------------------------------------------------------------------
-%% Title page — only the title itself sits inside a colour band; the
-%% defence label is a small kicker on white above the band, and the meta
-%% block (author / institute / extra / date) and the colour logo anchor
-%% the lower half of the page on white.  Layout inspired by the
-%% iamjarryfeng/DLUT-Beamer-Slide-V2 cover.
+%% Title page — only the title sits inside the colour band, which uses
+%% the new softer DLUTSteel.  No kicker (the defence label now lives in
+%% \subtitle).  Institute and \DLUTTitleExtra share a single line so the
+%% meta block stays tight and the colour seal can anchor the bottom
+%% without overlapping the gradient footer.
 \makeatletter
 \defbeamertemplate*{title page}{dlut}{%
   \begin{tikzpicture}[remember picture,overlay]
-    %% Defence label sits in the top whitespace, above the band.
-    \node[anchor=center,text=DLUTMuted,font=\scriptsize] at
-      ($(current page.north)+(0,-.85cm)$) {\DLUTDefenseLabel};
-    %% Title band: full-bleed horizontally, ~2.2cm tall, with ~1.25cm
-    %% breathing room above it so it reads as a frame around the title
-    %% rather than a wash filling the top of the slide.
-    \fill[DLUTBlue]
-      ($(current page.north west)+(0,-1.25cm)$) rectangle
-      ($(current page.north east)+(0,-3.45cm)$);
-    %% Title (+ optional subtitle), centred in the band.
+    %% Title band: full-bleed horizontally, ~1.95cm tall, with ~1.00cm
+    %% breathing room above it.  Lighter than the previous DLUTBlue
+    %% band so it reads as a frame, not a slab.
+    \fill[DLUTSteel]
+      ($(current page.north west)+(0,-1.00cm)$) rectangle
+      ($(current page.north east)+(0,-2.95cm)$);
     \node[anchor=center,align=center,inner sep=0pt] at
-      ($(current page.north)+(0,-2.35cm)$) {%
+      ($(current page.north)+(0,-1.97cm)$) {%
         \begin{minipage}{.88\paperwidth}
           \centering
           {\usebeamerfont{title}\color{white}\inserttitle\par}
           \ifx\insertsubtitle\@empty\else
-            \vspace{.18cm}
+            \vspace{.16cm}
             {\usebeamerfont{subtitle}\color{white!85}\insertsubtitle\par}
           \fi
         \end{minipage}};
   \end{tikzpicture}%
-  %% Flow content past the band, then meta block and logo on white.
-  \vspace*{3.65cm}%
+  %% Flow content past the band — small gap, then meta block + logo.
+  \vspace*{3.20cm}%
   \begin{center}
-    \begin{minipage}{.86\paperwidth}
+    \begin{minipage}{.88\paperwidth}
       \centering
       {\usebeamerfont{author}\color{DLUTInk}\insertauthor\par}
-      \vspace{.16cm}
-      {\usebeamerfont{institute}\color{DLUTMuted}\insertinstitute\par}
-      \ifdefempty{\DLUTTitleExtra}{}{%
-        \vspace{.12cm}
-        {\scriptsize\color{DLUTMuted}\DLUTTitleExtra\par}
-      }
-      \vspace{.32cm}
+      \vspace{.18cm}
+      {\usebeamerfont{institute}\color{DLUTMuted}\insertinstitute%
+       \ifdefempty{\DLUTTitleExtra}{}{\hspace{.7em}·\hspace{.7em}\DLUTTitleExtra}\par}
+      \vspace{.20cm}
       {\usebeamerfont{date}\color{DLUTMuted}\insertdate\par}
     \end{minipage}\par
-    \vspace{.80cm}
-    {\DLUTLogo[2.0cm]\par}
+    \vspace{.55cm}
+    {\DLUTLogo[1.8cm]\par}
   \end{center}
 }
 \makeatother
