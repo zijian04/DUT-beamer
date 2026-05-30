@@ -9,7 +9,7 @@
 *.toc
 *.vrb
 *.xdv
-main.pdf
+/main.pdf
 .reference-preview/
 .preview*/
 .DS_Store
