@@ -166,17 +166,20 @@
 %% no fill, no bold, the size and a hairline separator do the work.
 \makeatletter
 \setbeamertemplate{frametitle}{%
-  \nointerlineskip
-  \vskip.65em
-  \begin{beamercolorbox}[wd=\paperwidth,leftskip=.72cm,rightskip=.72cm]{frametitle}%
-    \usebeamerfont{frametitle}\insertframetitle%
-    \ifx\insertframesubtitle\@empty\else
-      \quad{\usebeamerfont{framesubtitle}\color{DLUTMuted}\insertframesubtitle}%
-    \fi\par
-    \vskip-.45em
-    {\color{DLUTLine}\rule{\dimexpr\paperwidth-1.44cm\relax}{.4pt}}\par
-  \end{beamercolorbox}%
-  \vskip.20em
+  \ifx\insertframetitle\@empty
+  \else
+    \nointerlineskip
+    \vskip.65em
+    \begin{beamercolorbox}[wd=\paperwidth,leftskip=.72cm,rightskip=.72cm]{frametitle}%
+      \usebeamerfont{frametitle}\insertframetitle%
+      \ifx\insertframesubtitle\@empty\else
+        \quad{\usebeamerfont{framesubtitle}\color{DLUTMuted}\insertframesubtitle}%
+      \fi\par
+      \vskip-.45em
+      {\color{DLUTLine}\rule{\dimexpr\paperwidth-1.44cm\relax}{.4pt}}\par
+    \end{beamercolorbox}%
+    \vskip.20em
+  \fi
 }
 \makeatother
 
@@ -204,33 +207,50 @@
 \makeatother
 
 %% ----------------------------------------------------------------------
-%% Title page — clean, centred, no decorative bars.  All text in the
-%% restrained editorial greys; only the logo carries colour.
+%% Title page — full-bleed colour band at the top hosts the defence
+%% label + title + subtitle in white; the meta block (author / institute
+%% / extra / date) is centred in the middle on white; the colour logo
+%% anchors the bottom of the page above the gradient footer.  Inspired
+%% loosely by the iamjarryfeng/DLUT-Beamer-Slide-V2 cover.
 \makeatletter
 \defbeamertemplate*{title page}{dlut}{%
-  \vspace*{.20cm}
+  \begin{tikzpicture}[remember picture,overlay]
+    %% Colour band: full-bleed, ~3.4cm tall from the top edge.
+    \fill[DLUTNavy]
+      (current page.north west) rectangle
+      ($(current page.north east)+(0,-3.40cm)$);
+    %% Defence label, small white text just below the top edge.
+    \node[anchor=center,text=white!75,font=\scriptsize] at
+      ($(current page.north)+(0,-.78cm)$) {\DLUTDefenseLabel};
+    %% Title (+ optional subtitle), centred in the lower part of the band.
+    \node[anchor=center,align=center,inner sep=0pt] at
+      ($(current page.north)+(0,-2.12cm)$) {%
+        \begin{minipage}{.88\paperwidth}
+          \centering
+          {\usebeamerfont{title}\color{white}\inserttitle\par}
+          \ifx\insertsubtitle\@empty\else
+            \vspace{.20cm}
+            {\usebeamerfont{subtitle}\color{white!85}\insertsubtitle\par}
+          \fi
+        \end{minipage}};
+  \end{tikzpicture}%
+  %% Flow content past the band, then meta block and logo on white.
+  \vspace*{3.65cm}%
   \begin{center}
-    {\DLUTLogo[2.6cm]\par}
-    \vspace{.75cm}
     \begin{minipage}{.86\paperwidth}
       \centering
-      {\usebeamerfont{title}\color{DLUTInk}\inserttitle\par}
-      \ifx\insertsubtitle\@empty
-      \else
-        \vspace{.32cm}
-        {\usebeamerfont{subtitle}\color{DLUTMuted}\insertsubtitle\par}
-      \fi
-      \vspace{.95cm}
       {\usebeamerfont{author}\color{DLUTInk}\insertauthor\par}
-      \vspace{.18cm}
+      \vspace{.16cm}
       {\usebeamerfont{institute}\color{DLUTMuted}\insertinstitute\par}
       \ifdefempty{\DLUTTitleExtra}{}{%
-        \vspace{.16cm}
+        \vspace{.12cm}
         {\scriptsize\color{DLUTMuted}\DLUTTitleExtra\par}
       }
-      \vspace{.32cm}
+      \vspace{.34cm}
       {\usebeamerfont{date}\color{DLUTMuted}\insertdate\par}
-    \end{minipage}
+    \end{minipage}\par
+    \vspace{.85cm}
+    {\DLUTLogo[2.0cm]\par}
   \end{center}
 }
 \makeatother
